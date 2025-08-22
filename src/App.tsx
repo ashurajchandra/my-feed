@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Home from "./pages/home/Home";
 import SignInPage from "./pages/signIn/SignIn";
 import SignUpPage from "./pages/signUp/SignUp";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/notFound/NotFound";
 
 function App() {
   return (
