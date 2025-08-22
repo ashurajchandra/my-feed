@@ -3,7 +3,7 @@ const LABEL = {
     SIGN_UP: 'Sign Up',
     SIGN_IN_TO_CONTINUE: 'Sign in to continue',
     SIGN_IN_TO_ACCESS_FEATURES: 'Sign in to access all the features on this app',
-    EMAIL_OR_USERNAME: 'Email or username',
+    EMAIL_OR_USERNAME: 'Email or Username',
     PASSWORD: 'Password',
     DONT_HAVE_AN_ACCOUNT: "Don't have an account?",
   

@@ -1,19 +1,47 @@
+//Import NPM packages
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+//Import custom components
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+
+//Import  pages
 import Home from './pages/home/Home';
 import SignIn from './pages/signIn/SignIn';
 import SignUp from './pages/signUp/SignUp';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen">
+          <Routes>
+            {/* Home page - accessible to both authenticated and guest users */}
+            <Route path="/" element={<Home />} />
+            
+            {/* SignIn page - requires guest status (not authenticated) */}
+            <Route 
+              path="/signin" 
+              element={
+                <ProtectedRoute requireGuest={true}>
+                  <SignIn />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* SignUp page - requires guest status (not authenticated) */}
+            <Route 
+              path="/signup" 
+              element={
+                <ProtectedRoute requireGuest={true}>
+                  <SignUp />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
