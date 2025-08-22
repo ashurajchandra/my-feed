@@ -30,16 +30,16 @@ const Header: React.FC<HeaderProps> = ({ image, username, logout }) => {
       <div className="flex items-center w-[200px] justify-end space-x-4">
         <Link 
           to="/" 
-          className="text-blue-600 hover:text-blue-700 font-medium"
+          className="text-[#000] font-semibold text-[14px] font-inter"
         >
           {LABEL.BACK_TO_HOME}
         </Link>
-        <button
+        {/* <button
           onClick={logout}
           className="text-gray-600 hover:text-gray-800 font-medium"
         >
           {LABEL.LOGOUT}
-        </button>
+        </button> */}
       </div>
     </header>
   );
