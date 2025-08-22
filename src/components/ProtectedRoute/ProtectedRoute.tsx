@@ -1,6 +1,12 @@
+//Import NPM packages
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+
+//Import custom hooks
 import { useAuthState } from '../../hooks/useAuthState';
+
+//Import components
+import Loader from '../Loader/Loader';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -15,12 +21,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   // Show loading spinner while checking auth status
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-        <p className="mt-4 text-gray-600">Loading...</p>
-      </div>
-    );
+    return <Loader text="Checking authentication..." />;
   }
 
   // For pages that require guest status (like signin/signup) - redirect authenticated users
