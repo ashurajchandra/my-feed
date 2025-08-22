@@ -6,8 +6,8 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 //Import  pages
 import Home from './pages/home/Home';
-import SignIn from './pages/signIn/SignIn';
-import SignUp from './pages/signUp/SignUp';
+import SignInPage from './pages/signIn/SignIn';
+import SignUpPage from './pages/signUp/SignUp';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
               path="/signin" 
               element={
                 <ProtectedRoute requireGuest={true}>
-                  <SignIn />
+                  <SignInPage />
                 </ProtectedRoute>
               } 
             />
@@ -33,7 +33,7 @@ function App() {
               path="/signup" 
               element={
                 <ProtectedRoute requireGuest={true}>
-                  <SignUp />
+                  <SignUpPage />
                 </ProtectedRoute>
               } 
             />

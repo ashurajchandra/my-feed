@@ -1,6 +1,5 @@
 //Import NPM packages 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 //Import custom hooks
 import { useAuthState } from '../../hooks/useAuthState';
@@ -11,13 +10,19 @@ import Header from '../../components/Header/Header';
 import Loader from '../../components/Loader/Loader';
 import CreatePost from '../../components/CreatePost/CreatePost';
 import Post from '../../components/Post/Post';
+import Popup from '../../components/Popup/Popup';
+import SignIn from '../../components/SignIn/SignIn';
+import SignUp from '../../components/SignUp/SignUp';
 
 //Import constants
 import { DUMMY_POSTS } from './constants';
 
+
 const Home: React.FC = () => {
-  const { user, isAuthenticated, logout, isLoading } = useAuthState();
+  const { user, isAuthenticated, isLoading } = useAuthState();
   const [posts, setPosts] = useState(DUMMY_POSTS);
+  const [showSignInPopup, setShowSignInPopup] = useState(false);
+  const [popUpContent, setPopUpContent] = useState<string>('signIn');
 
   // Use pagination hook for posts with local state
   const {
@@ -30,18 +35,29 @@ const Home: React.FC = () => {
     pageSize: 5 // Show 5 posts per page
   });
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      setShowSignInPopup(false);
+    }
+  }, [isAuthenticated]);
+
   // Show loading spinner while checking auth status
   if (isLoading) {
     return <Loader  />;
   }
 
   const handlePostSubmit = (postData: any) => {
-    console.log('New post created:', postData);
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      setShowSignInPopup(true);
+      return;
+    }
+
     
     // Create new post object
     const newPost = {
       id: Date.now(), // Generate unique ID
-      userName: user?.email?.split('@')[0] || user?.username || 'Annonymous',
+      userName: user?.email?.split('@')[0] || user?.username || 'Anonymous',
       timestamp: 'Just now',
       content: postData.content,
       emoji: '😊' // Default emoji for new posts
@@ -98,6 +114,16 @@ const Home: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* SignIn Popup for unauthenticated users */}
+      <Popup
+        isOpen={showSignInPopup}
+        onClose={() => setShowSignInPopup(false)}
+        closeOnOverlayClick={true}
+      >
+        {popUpContent === 'signIn' && <SignIn updatePopUpContent={() => setPopUpContent('signUp')} />}
+        {popUpContent === 'signUp' && <SignUp updatePopUpContent={() => setPopUpContent('signIn')} />}
+      </Popup>
     </div>
   );
 };
