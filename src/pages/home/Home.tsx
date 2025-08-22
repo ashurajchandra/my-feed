@@ -1,9 +1,10 @@
 //Import NPM packages 
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 //Import custom hooks
 import { useAuthState } from '../../hooks/useAuthState';
+import { usePaginated } from '../../cutomHooks/usePaginated';
 
 //Import components
 import Header from '../../components/Header/Header';
@@ -18,9 +19,20 @@ const Home: React.FC = () => {
   const { user, isAuthenticated, logout, isLoading } = useAuthState();
   const [posts, setPosts] = useState(DUMMY_POSTS);
 
+  // Use pagination hook for posts with local state
+  const {
+    displayedData,
+    isFetching,
+    hasMore,
+    lastElementRef,
+  } = usePaginated({
+    data: posts,
+    pageSize: 5 // Show 5 posts per page
+  });
+
   // Show loading spinner while checking auth status
   if (isLoading) {
-    return <Loader text="Checking authentication..." />;
+    return <Loader  />;
   }
 
   const handlePostSubmit = (postData: any) => {
@@ -29,7 +41,7 @@ const Home: React.FC = () => {
     // Create new post object
     const newPost = {
       id: Date.now(), // Generate unique ID
-      userName: user?.email?.split('@')[0] || 'Anonymous',
+      userName: user?.email?.split('@')[0] || user?.username || 'Annonymous',
       timestamp: 'Just now',
       content: postData.content,
       emoji: '😊' // Default emoji for new posts
@@ -55,9 +67,35 @@ const Home: React.FC = () => {
         {/* Posts Feed Section */}
         <div>
           
-          {posts.map((post) => (
-            <Post key={post.id} {...post} />
+          {displayedData.map((post: any, index: number) => (
+            <div key={post.id} ref={index === displayedData.length - 1 ? lastElementRef : null}>
+              <Post {...post} />
+            </div>
           ))}
+          
+          {/* Loading indicator */}
+          {isFetching && (
+            <div className="flex justify-center py-4">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                <p className="text-sm text-gray-500">Loading more posts...</p>
+              </div>
+            </div>
+          )}
+          
+          {/* End of posts message */}
+          {!hasMore && displayedData.length > 0 && (
+            <div className="text-center py-4 text-gray-500">
+              No more posts to load
+            </div>
+          )}
+          
+          {/* Empty state */}
+          {displayedData.length === 0 && !isFetching && (
+            <div className="text-center py-8 text-gray-500">
+              No posts yet. Create your first post above!
+            </div>
+          )}
         </div>
       </div>
     </div>

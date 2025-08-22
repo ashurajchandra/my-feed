@@ -2,7 +2,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 //Import custom components
-import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 //Import  pages
@@ -12,7 +11,7 @@ import SignUp from './pages/signUp/SignUp';
 
 function App() {
   return (
-    <AuthProvider>
+    
       <Router>
         <div className="min-h-screen">
           <Routes>
@@ -41,7 +40,7 @@ function App() {
           </Routes>
         </div>
       </Router>
-    </AuthProvider>
+    
   );
 }
 
