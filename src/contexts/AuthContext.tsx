@@ -148,8 +148,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Create new user with password stored
       const newStoredUser: StoredUser = {
         id: Date.now().toString(),
-        username: username || `no-username`, // Generate username if not provided
-        email: email || ``, // Generate email if not provided
+        username: username || (email ? email.split('@')[0] : 'no-username'), // Generate username if not provided
+        email: email || `user-${Date.now()}@example.com`, // Generate email if not provided
         password: password,
       };
 

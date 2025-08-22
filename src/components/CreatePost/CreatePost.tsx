@@ -94,7 +94,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
         );
         break;
       case "alert":
-        alert("no need to implement full functionality");
+        alert("function not implemented");
         break;
       case "clearPost":
         setPostData({

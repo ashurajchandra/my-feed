@@ -25,7 +25,7 @@ const Post: React.FC<PostProps> = ({
   const handleButtonClick = (button: any) => {
     switch (button.onClick) {
       case "alert":
-        alert("no need to implement full functionality");
+        alert("function not implemented");
         break;
       default:
         break;
