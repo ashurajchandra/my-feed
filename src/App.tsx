@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Home from "./pages/home/Home";
 import SignInPage from "./pages/signIn/SignIn";
 import SignUpPage from "./pages/signUp/SignUp";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* 404 page - catch all unmatched routes */}
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
     </Router>
