@@ -9,7 +9,7 @@ import { LABEL, PLACEHOLDER } from "./constants";
 import IMAGES from "../../assets/images";
 
 //Import hooks
-import { useAuthState } from "../../hooks/useAuthState";
+import { useAuthState } from "../../cutomHooks/useAuthState";
 
 interface FormData {
   emailOrUsername: string;

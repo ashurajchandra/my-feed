@@ -3,7 +3,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 //Import custom hooks
-import { useAuthState } from "../../hooks/useAuthState";
+import { useAuthState } from "../../cutomHooks/useAuthState";
 
 //Import components
 import Loader from "../Loader/Loader";

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 
 //Import custom hooks
-import { useAuthState } from "../../hooks/useAuthState";
+import { useAuthState } from "../../cutomHooks/useAuthState";
 import { usePaginated } from "../../cutomHooks/usePaginated";
 
 //Import components

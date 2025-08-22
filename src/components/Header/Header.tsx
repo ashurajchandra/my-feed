@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 //Import custom hooks
-import { useAuthState } from "../../hooks/useAuthState";
+import { useAuthState } from "../../cutomHooks/useAuthState";
 
 //Import constants
 import { LABEL } from "./constants";
