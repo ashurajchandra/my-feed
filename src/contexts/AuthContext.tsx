@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 
 interface User {
   id: string;
@@ -28,7 +28,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
@@ -43,23 +43,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Mock user database for demo purposes
   const mockUsers: StoredUser[] = [
-    { id: '1', username: 'demo-user', email: 'demo@example.com', password: 'password123' },
-    { id: '2', username: 'test-user', email: 'test@example.com', password: 'test123' }
+    {
+      id: "1",
+      username: "demo-user",
+      email: "demo@example.com",
+      password: "password123",
+    },
+    {
+      id: "2",
+      username: "test-user",
+      email: "test@example.com",
+      password: "test123",
+    },
   ];
 
   // Check if user is already authenticated on app startup
   const checkAuthStatus = () => {
-    const token = localStorage.getItem('authToken');
-    const userData = localStorage.getItem('user');
-    
+    const token = localStorage.getItem("authToken");
+    const userData = localStorage.getItem("user");
+
     if (token && userData) {
       try {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
       } catch (error) {
         // Clear invalid data
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("user");
       }
     }
     setIsLoading(false);
@@ -72,37 +82,38 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (emailOrUsername: string, password: string) => {
     setIsLoading(true);
-    
+
     try {
       // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
       // Input validation
       if (!emailOrUsername.trim() || !password.trim()) {
-        throw new Error('Please provide both email/username and password');
+        throw new Error("Please provide both email/username and password");
       }
-      
+
       // Mock authentication logic - check against stored users
       // User can login with either email or username
-      const foundUser = mockUsers.find(u => 
-        (u.email.toLowerCase() === emailOrUsername.toLowerCase() || 
-         u.username.toLowerCase() === emailOrUsername.toLowerCase()) && 
-        u.password === password
+      const foundUser = mockUsers.find(
+        (u) =>
+          (u.email.toLowerCase() === emailOrUsername.toLowerCase() ||
+            u.username.toLowerCase() === emailOrUsername.toLowerCase()) &&
+          u.password === password
       );
-      
+
       if (foundUser) {
         const userData: User = {
           id: foundUser.id,
           username: foundUser.username,
-          email: foundUser.email
+          email: foundUser.email,
         };
         setUser(userData);
-        
+
         // Mock localStorage token
-        localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
-        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem("authToken", "mock-jwt-token-" + Date.now());
+        localStorage.setItem("user", JSON.stringify(userData));
       } else {
-        throw new Error('Invalid email/username or password');
+        throw new Error("Invalid email/username or password");
       }
     } catch (error) {
       // Re-throw the error so the component can handle it
@@ -115,48 +126,48 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signup = async (email: string, username: string, password: string) => {
     setIsLoading(true);
-    
+
     try {
       // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Validate that at least one of email or username is provided
       if (!email && !username) {
-        throw new Error('Please provide either an email address or username');
+        throw new Error("Please provide either an email address or username");
       }
-      
+
       // Mock validation - check against existing users
-      if (email && mockUsers.some(u => u.email === email)) {
-        throw new Error('Email already exists');
+      if (email && mockUsers.some((u) => u.email === email)) {
+        throw new Error("Email already exists");
       }
-      
-      if (username && mockUsers.some(u => u.username === username)) {
-        throw new Error('Username already taken');
+
+      if (username && mockUsers.some((u) => u.username === username)) {
+        throw new Error("Username already taken");
       }
-      
+
       // Create new user with password stored
       const newStoredUser: StoredUser = {
         id: Date.now().toString(),
         username: username || `no-username`, // Generate username if not provided
         email: email || ``, // Generate email if not provided
-        password: password
+        password: password,
       };
-      
+
       // Add to mock database
       mockUsers.push(newStoredUser);
-      
+
       // Create user object without password for state
       const newUser: User = {
         id: newStoredUser.id,
         username: newStoredUser.username,
-        email: newStoredUser.email
+        email: newStoredUser.email,
       };
-      
+
       setUser(newUser);
-      
+
       // Mock localStorage token
-      localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
-      localStorage.setItem('user', JSON.stringify(newUser));
+      localStorage.setItem("authToken", "mock-jwt-token-" + Date.now());
+      localStorage.setItem("user", JSON.stringify(newUser));
     } catch (error) {
       // Re-throw the error so the component can handle it
       throw error;
@@ -169,8 +180,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     setUser(null);
     // Clear mock tokens
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
   };
 
   const value: AuthContextType = {
@@ -179,12 +190,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     login,
     logout,
     signup,
-    checkAuthStatus
+    checkAuthStatus,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

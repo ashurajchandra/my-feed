@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef, useState } from 'react';
+import { useEffect, useCallback, useRef, useState } from "react";
 
 interface UseInfiniteScrollOptions {
   threshold?: number;
@@ -16,7 +16,7 @@ interface UseInfiniteScrollReturn {
 /**
  * Custom hook for implementing infinite scroll functionality
  * Uses Intersection Observer API for optimal performance
- * 
+ *
  * @param fetchMore - Function to call when more data needs to be loaded
  * @param options - Configuration options for the intersection observer
  * @returns Object containing isFetching state and ref for the last element
@@ -28,8 +28,8 @@ export const useInfiniteScroll = (
   const {
     threshold = 1.0,
     root = null,
-    rootMargin = '100px',
-    enabled = true
+    rootMargin = "100px",
+    enabled = true,
   } = options;
 
   const [isFetching, setIsFetching] = useState(false);
@@ -39,13 +39,13 @@ export const useInfiniteScroll = (
   const handleIntersection = useCallback(
     async (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      
+
       if (target.isIntersecting && enabled && !isFetching) {
         setIsFetching(true);
         try {
           await fetchMore();
         } catch (error) {
-          console.error('Error fetching more data:', error);
+          console.error("Error fetching more data:", error);
         } finally {
           setIsFetching(false);
         }

@@ -1,10 +1,9 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
-import { useInfiniteScroll } from './useInfiniteScroll';
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { useInfiniteScroll } from "./useInfiniteScroll";
 
 interface UsePaginationOptions<T> {
   data: T[];
   pageSize?: number;
-
 }
 
 interface UsePaginationReturn<T> {
@@ -27,8 +26,6 @@ export const usePaginated = <T>({
 }: UsePaginationOptions<T>): UsePaginationReturn<T> => {
   const [currentPage, setCurrentPage] = useState(1);
 
-
-
   // Calculate displayed data based on current page
   const displayedData = useMemo(() => {
     return data.slice(0, currentPage * pageSize);
@@ -41,8 +38,8 @@ export const usePaginated = <T>({
   const fetchMore = useCallback(async () => {
     if (hasMore) {
       // Add 2 second delay to simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setCurrentPage(prev => prev + 1);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setCurrentPage((prev) => prev + 1);
     }
   }, [hasMore]);
 
@@ -70,4 +67,3 @@ export const usePaginated = <T>({
     currentPage,
   };
 };
-

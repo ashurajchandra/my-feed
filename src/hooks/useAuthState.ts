@@ -1,11 +1,11 @@
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from "../contexts/AuthContext";
 
 export const useAuthState = () => {
   const { user, isLoading, login, logout, signup } = useAuth();
-  
+
   const isAuthenticated = !!user;
   const isGuest = !user;
-  
+
   return {
     user,
     isLoading,
@@ -13,6 +13,6 @@ export const useAuthState = () => {
     isGuest,
     login,
     logout,
-    signup
+    signup,
   };
 };
