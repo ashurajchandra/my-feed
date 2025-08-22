@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import IMAGES from '../../assets/images';
 
 //Import Constants
-import {OPTIONS, PLACEHOLDER, FORMATTING_OPTIONS, TOOLBAR_BUTTONS, BOTTOM_ACTION_BUTTONS} from './constants';
+import {OPTIONS, PLACEHOLDER, FORMATTING_OPTIONS, TOOLBAR_BUTTONS, BOTTOM_ACTION_BUTTONS, TOP_RIGHT_BUTTONS, BOTTOM_RIGHT_BUTTONS} from './constants';
 
 interface CreatePostProps {
   onSubmit?: (postData: PostData) => void;
@@ -77,6 +77,19 @@ const CreatePost: React.FC<CreatePostProps> = ({
         break;
       case 'alert':
         alert('no need to implement full functionality');
+        break;
+      case 'clearPost':
+        setPostData({
+          content: '',
+          format: FORMATTING_OPTIONS.PARAGRAPH,
+          isBold: true,
+          isItalic: false,
+          isUnderline: false,
+          listType: FORMATTING_OPTIONS.NONE
+        });
+        break;
+      case 'submitPost':
+        handleSubmit();
         break;
       default:
         break;
@@ -159,23 +172,17 @@ const CreatePost: React.FC<CreatePostProps> = ({
             </div>
           </div>
 
-          {/* Delete Button */}
-          <button 
-            onClick={() => {
-              setPostData({
-                content: '',
-                format: FORMATTING_OPTIONS.PARAGRAPH,
-                isBold: true,
-                isItalic: false,
-                isUnderline: false,
-                listType: FORMATTING_OPTIONS.NONE
-              });
-              
-            }}
-            className='cursor-pointer'
+          {/* Top Right Buttons */}
+          {TOP_RIGHT_BUTTONS.map((button) => (
+            <button
+              key={button.id}
+              onClick={() => handleButtonClick(button)}
+              className='cursor-pointer'
+              title={button.title}
             >
-           <img src={IMAGES.TRASH_ICON.src} alt={IMAGES.TRASH_ICON.alt}/>
-          </button>
+              <img src={IMAGES[button.icon as keyof typeof IMAGES].src} alt={IMAGES[button.icon as keyof typeof IMAGES].alt}/>
+            </button>
+          ))}
         </div>
 
         {/* Text Input Area */}
@@ -210,14 +217,18 @@ const CreatePost: React.FC<CreatePostProps> = ({
             ))}
           </div>
 
-          {/* Send Button */}
-          <button
-            onClick={handleSubmit}
-            disabled={!postData.content.trim()}
-            className='cursor-pointer'
-          >
-           <img src={IMAGES.SEND_ICON.src} alt={IMAGES.SEND_ICON.alt}/>
-          </button>
+          {/* Bottom Right Buttons */}
+          {BOTTOM_RIGHT_BUTTONS.map((button) => (
+            <button
+              key={button.id}
+              onClick={() => handleButtonClick(button)}
+              disabled={!postData.content.trim()}
+              className='cursor-pointer'
+              title={button.title}
+            >
+              <img src={IMAGES[button.icon as keyof typeof IMAGES].src} alt={IMAGES[button.icon as keyof typeof IMAGES].alt}/>
+            </button>
+          ))}
         </div>
       </div>
     </div>

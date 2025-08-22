@@ -18,6 +18,10 @@ const IMAGES = {
     LIST_ORDERED_ICON: {src:`${BASE_URL}/list-ordered_jngloz.svg`, alt:'list-ordered-icon'},
     SCRIPT_ICON: {src:`${BASE_URL}/script_wegiva.svg`, alt:'script-icon'},
     QUOTE_ICON: {src:`${BASE_URL}/quotes_zmhlqd.svg`, alt:'quote-icon'},
+    LIKE_ICON: {src:`${BASE_URL}/heart_ohtlhj.svg`, alt:'like-icon'},
+    COMMENT_ICON: {src:`${BASE_URL}/comment_rusafq.svg`, alt:'comment-icon'},
+    SHARE_ICON: {src:`${BASE_URL}/re-share_df8uxj.svg`, alt:'share-icon'},
+    PROFILE_ICON: {src:`${BASE_URL}/samples/animals/cat.jpg`, alt:'profile-icon'},
 }
 
 export default IMAGES;

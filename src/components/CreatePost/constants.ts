@@ -125,4 +125,25 @@ const BOTTOM_ACTION_BUTTONS = [
     }
 ]
 
-export {OPTIONS, PLACEHOLDER, FORMATTING_OPTIONS, TOOLBAR_BUTTONS, BOTTOM_ACTION_BUTTONS};
+const TOP_RIGHT_BUTTONS = [
+    {
+        id: 'trash',
+        type: 'action',
+        icon: 'TRASH_ICON',
+        title: 'Clear Post',
+        onClick: 'clearPost'
+    }
+]
+
+const BOTTOM_RIGHT_BUTTONS = [
+    {
+        id: 'send',
+        type: 'action',
+        icon: 'SEND_ICON',
+        title: 'Send Post',
+        onClick: 'submitPost',
+        disabled: true // This will be handled dynamically
+    }
+]
+
+export {OPTIONS, PLACEHOLDER, FORMATTING_OPTIONS, TOOLBAR_BUTTONS, BOTTOM_ACTION_BUTTONS, TOP_RIGHT_BUTTONS, BOTTOM_RIGHT_BUTTONS};
